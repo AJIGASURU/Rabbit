@@ -25,18 +25,18 @@ public class manholeCon : MonoBehaviour {
 		this.playerdistance = Mathf.Abs((Player.transform.position - transform.position).magnitude);
 		if (this.playerdistance < 5f){
 			if (Input.GetKey (KeyCode.Space)) {
-				this.degree += 0.5f;
+				this.degree += 0.1f;
 			}
 			if (this.degree < 100f) {
-				this.ManholeText.text = "スペースキーを長押しでマンホールを回す\n達成度:" + degree.ToString () + "%";
+				this.ManholeText.text = "スペースキーをながおしでマンホールを回す\nたっせいど:" + degree.ToString () + "%";
 			} else {
-				this.ManholeText.text = "マンホールは開いている。";
+				this.ManholeText.text = "マンホールは開いている";
 				GetComponent<SpriteRenderer> ().material.color = this.Black;
 			}
 		}else if(playerdistance < 10f){
 			this.ManholeText.text = "";
 		}
-		transform.rotation = Quaternion.Euler (new Vector3 (90f, 0, degree));
+		transform.rotation = Quaternion.Euler (new Vector3 (90f, 0, degree*30f));
 		if (this.degree >= 100f) {
 			rabbits = GameObject.FindGameObjectsWithTag("rabbit");
 			foreach (GameObject rabbit in rabbits) {

@@ -13,7 +13,7 @@ public class Playercon : MonoBehaviour {
 	private Animator PlayerAnimator;
 	// Use this for initialization
 	void Start () {
-		this.speed = 0.5f;
+		this.speed = 0.3f;
 		this.state = 0;
 		this.PlayerAnimator = GetComponent<Animator> ();
 	}
@@ -50,10 +50,10 @@ public class Playercon : MonoBehaviour {
 		this.PlayerAnimator.SetInteger ("PlayerState", this.state);
 		transform.position = this.tmpPos;
 
-		if (Input.GetKey (KeyCode.T)) {
+		if (Input.GetKey (KeyCode.A)) {
 			transform.Rotate (new Vector3 (0, 10f, 0));
 		}
-		if (Input.GetKey (KeyCode.Y)) {
+		if (Input.GetKey (KeyCode.S)) {
 			transform.Rotate (new Vector3 (0, -10f, 0));
 		}
 	}
