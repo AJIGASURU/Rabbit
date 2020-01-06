@@ -9,13 +9,13 @@ public class Playercon : MonoBehaviour {
 	private bool moveback;
 	private bool moveleft;
 	private bool moveright;
-	private int state;
-	private Animator PlayerAnimator;
+	private int state; //アニメーション遷移
+	private Animator playerAnimator;
 	// Use this for initialization
 	void Start () {
 		this.speed = 0.3f;
 		this.state = 0;
-		this.PlayerAnimator = GetComponent<Animator> ();
+		this.playerAnimator = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -47,38 +47,36 @@ public class Playercon : MonoBehaviour {
 			this.moveleft = false;
 		} 
 		TransForm ();
-
-		this.PlayerAnimator.SetInteger ("PlayerState", this.state);
+		this.playerAnimator.SetInteger ("PlayerState", this.state);
 		transform.position = this.tmpPos;
 
 		if (Input.GetKey (KeyCode.K)) {
-			transform.Rotate (new Vector3 (0, 10f, 0));
+			transform.Rotate (new Vector3 (0, 8f, 0));
 		}
 		if (Input.GetKey (KeyCode.L)) {
-			transform.Rotate (new Vector3 (0, -10f, 0));
+			transform.Rotate (new Vector3 (0, -8f, 0));
 		}
 	}
 
 	void TransForm(){
+		Vector3 tmpDir = Vector3.zero;
 		if (moveback) {
-			this.tmpPos += transform.forward * speed;
+			tmpDir += transform.forward;
 			this.state = 3;
 		} 
 		if (movefront) {
-			this.tmpPos -= transform.forward * speed;
+			tmpDir -= transform.forward;
 			this.state = 1;
 		}
 		if (moveright) {
-			this.tmpPos += transform.right * speed;
+			tmpDir += transform.right;
 			this.state = 7;
 		}
 		if (moveleft) {
-			this.tmpPos -= transform.right * speed;
+			tmpDir -= transform.right;
 			this.state = 5;
 		}
+		this.tmpPos += tmpDir.normalized * speed;
 	}
 
 }
-
-
-

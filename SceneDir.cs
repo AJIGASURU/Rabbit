@@ -11,30 +11,34 @@ public class SceneDir : MonoBehaviour { //シーンの初期化（オブジェ�
 
 	private bool gameClear;
 	private Text message;
-	private Text rnText;
-	private GameObject Panel;
-	private GameManager GameManagerSC;
-	private float cleartimer;
-	private float overtimer;
+	private Text rnText; //Rabitnumbertext
+	private GameObject panel;
+	private GameManager gameManagerSC;
+	private float clearTimer;
+	private float overTimer;
 	private int manholePosID; //マンホールの初期位置の指定用->とりあえずマンホールは一つで実装中
-	//private int rabbitPosID; //ウサギの初期位置の指定
+	private Text manholeText; //マンホールに関してのテキスト
+	private GameObject manholePanel; //テキスト表示用のパネル
 
 	// Use this for initialization
 	void Start () {
-		this.GameManagerSC = GameObject.Find("GameManager").GetComponent<GameManager>();//Scene01から実行するとエラーになる理由
-		this.rabbitNum = this.GameManagerSC.prepareRabbit; //出場させるうさぎの数を現在のうさぎの数に代入
+		this.gameManagerSC = GameObject.Find("GameManager").GetComponent<GameManager>();//Scene01から実行するとエラーになる理由
+		this.rabbitNum = this.gameManagerSC.prepareRabbit; //出場させるうさぎの数を現在のうさぎの数に代入
 		this.gameOver = false;
 		this.gameClear = false;
 		this.message = GameObject.Find ("UICanvas/message").GetComponent<Text>();
 		this.rnText = GameObject.Find ("UICanvas/RabbitNumText").GetComponent<Text> ();
-		this.Panel = GameObject.Find ("UICanvas/Panel");
-		this.Panel.SetActive (false);
-		this.cleartimer = 0f;
-		this.overtimer = 0f;
-
-		this.manholePosID = Random.Range(0, 3); //0~2、本当にランダムか調べよう
+		this.panel = GameObject.Find ("UICanvas/Panel");
+		this.panel.SetActive (false);
+		this.clearTimer = 0f;
+		this.overTimer = 0f;
+		this.manholeText = GameObject.Find ("UICanvas/ManholeText").GetComponent<Text>();
+		this.manholePanel = GameObject.Find ("UICanvas/ManholePanel");
+		this.manholePanel.SetActive (false);
+		//マンホール準備
+		this.manholePosID = Random.Range(0, 3); 
 		Instantiate(this.manholePrefab, SetManholePos(manholePosID), Quaternion.Euler(90.0f, 0f, 0f)); //マンホール生成
-
+		//うさぎ準備
 		int[] rabbitPosID = new int[this.rabbitNum]; //それぞれのうさぎの初期位置を指定
 		for (int i = 0; i < rabbitNum; i++) {
 			rabbitPosID[i] = Random.Range (0, 10);
@@ -54,23 +58,22 @@ public class SceneDir : MonoBehaviour { //シーンの初期化（オブジェ�
 		this.rnText.text = "のこり" + rabbitNum.ToString() + "ひき";
 
 		if (rabbitNum == 0) {
-			gameClear = true;
-			//this.message.text = "うさぎは落ちた";
+			gameClear = true; //クリア
 		}
 		if (gameClear) {
-			cleartimer += Time.deltaTime;
+			clearTimer += Time.deltaTime;
 			this.message.text = "すべてのうさぎはおちた！\nくりあー！";
-			this.Panel.SetActive (true);
-			if (cleartimer > 5f) {
-				GameManagerSC.LoadMenu (true);
+			this.panel.SetActive (true);
+			if (clearTimer > 5f) {
+				gameManagerSC.LoadMenu ();
 			}
 		}
 		if (gameOver) {
-			overtimer += Time.deltaTime;
+			overTimer += Time.deltaTime;
 			this.message.text = "つかまった・・・。";
-			this.Panel.SetActive (true);
-			if (overtimer > 5f) {
-				GameManagerSC.LoadMenu(false);
+			this.panel.SetActive (true);
+			if (overTimer > 5f) {
+				gameManagerSC.LoadMenu();
 			}
 		}
 	}
@@ -136,6 +139,20 @@ public class SceneDir : MonoBehaviour { //シーンの初期化（オブジェ�
 
 	public void DropRabbit(){ //->manhole.cs、うさぎが落ちた
 		rabbitNum--;
-		GameManagerSC.CatchRabbit++;
+		gameManagerSC.catchRabbit++;
 	}
+
+	public void ManholePanelSet(bool b){
+		if (b) {
+			this.manholePanel.SetActive (true);
+		} else {
+			this.manholePanel.SetActive (false);
+		}
+	}
+
+	public void ManholeTextSet(string message, int fontSize){
+		this.manholeText.text = message;
+		this.manholeText.fontSize = fontSize;
+	}
+
 }

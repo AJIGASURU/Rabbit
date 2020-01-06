@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraCon : MonoBehaviour {
-	public GameObject Player;
-	private Vector3 CameraPos;
+	public GameObject player;
+	private Vector3 cameraPos;
 
 	// Use this for initialization
 	void Start () {
@@ -13,8 +13,8 @@ public class CameraCon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.CameraPos = Player.transform.position - Player.transform.forward*10f;
-		transform.position = this.CameraPos;
-		transform.rotation = Player.transform.rotation;
+		this.cameraPos = player.transform.position - player.transform.forward*10f;
+		transform.position = this.cameraPos;
+		transform.rotation = player.transform.rotation;
 	}
 }
