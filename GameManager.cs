@@ -28,11 +28,8 @@ public class GameManager : MonoBehaviour {
 		}
 		BGMPlay ();
 	}
-	public void LoadMenu(){ //シーン管理ここだけでやりたい
-		SceneManager.LoadScene("MenuScene");
-	}
-	public void LoadScene01(){ //シーン管理ここだけでやりたい
-		SceneManager.LoadScene("Scene01");
+	public void LoadScene(string sceneName){ //シーン管理ここだけでやりたい
+		SceneManager.LoadScene(sceneName);
 	}
 	private void BGMPlay(){
 		if (nowScene.name == "Scene01") {

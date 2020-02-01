@@ -65,7 +65,7 @@ public class SceneDir : MonoBehaviour { //シーンの初期化（オブジェ�
 			this.message.text = "すべてのうさぎはおちた！\nくりあー！";
 			this.panel.SetActive (true);
 			if (clearTimer > 5f) {
-				gameManagerSC.LoadMenu ();
+				gameManagerSC.LoadScene ("MenuScene");
 			}
 		}
 		if (gameOver) {
@@ -73,7 +73,7 @@ public class SceneDir : MonoBehaviour { //シーンの初期化（オブジェ�
 			this.message.text = "つかまった・・・。";
 			this.panel.SetActive (true);
 			if (overTimer > 5f) {
-				gameManagerSC.LoadMenu();
+				gameManagerSC.LoadScene ("MenuScene");
 			}
 		}
 	}

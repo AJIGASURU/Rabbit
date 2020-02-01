@@ -29,7 +29,7 @@ public class MenuDir : MonoBehaviour {
 		}
 	}
 	public void OnClickStart(){ 
-		gameManagerSC.LoadScene01 ();
+		gameManagerSC.LoadScene ("Scene01");
 	}
 	public void OnClickAsobikata(){ 
 		this.asobikataPanel.SetActive (true);
