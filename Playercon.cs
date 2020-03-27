@@ -21,10 +21,10 @@ public class Playercon : MonoBehaviour {
 		this.playerAnimator.SetInteger ("PlayerState", AnimationState());
 
 		//回転
-		if (Input.GetKey (KeyCode.K)) {
+		if (Input.GetKey (KeyCode.L)) {
 			transform.Rotate (new Vector3 (0, 8f, 0));
 		}
-		if (Input.GetKey (KeyCode.L)) {
+		if (Input.GetKey (KeyCode.K)) {
 			transform.Rotate (new Vector3 (0, -8f, 0));
 		}
 	}
@@ -75,7 +75,7 @@ public class Playercon : MonoBehaviour {
 		transform.position = tmpPos;
 	}
 
-	int AnimationState(){ //アニメーションの状態を返す関数。
+	int AnimationState(){ //しかるべきアニメーションの状態を返す関数。
 		if (moveback) {
 			return 3;
 		} 

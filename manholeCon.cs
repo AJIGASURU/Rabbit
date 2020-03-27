@@ -21,17 +21,18 @@ public class manholeCon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.playerDistance = Mathf.Abs((player.transform.position - transform.position).magnitude);
+		this.playerDistance = Mathf.Abs((player.transform.position - transform.position).magnitude); //プレイヤー方向？
 		if (this.playerDistance < 5f){//マンホールに近づいている
-			if (Input.GetKey (KeyCode.Space)) {
-				this.degree += 0.2f;
+			if (Input.GetKey (KeyCode.J)) {
+				this.degree += 0.5f; //マンホール回る速さ
 			}
 			sceneDirSC.ManholePanelSet (true);
 			if (this.degree < 100f) {
 				this.degreeInt = (int)degree;
 				sceneDirSC.ManholeTextSet (degreeInt.ToString () + "%", 50);
-			} else {
+			} else {　//近づいていて空いている
 				sceneDirSC.ManholeTextSet ("マンホールは空いている", 20);
+                player.GetComponent<Rigidbody>().AddForce((player.transform.position - transform.position)*5f); //マンホール上に立てないように
 				GetComponent<SpriteRenderer> ().material.color = this.black;
 			}
 		}else if(playerDistance < 10f){ //マンホールの周りをプレイヤーは一度通ることを利用
@@ -40,9 +41,10 @@ public class manholeCon : MonoBehaviour {
 		}
 		transform.rotation = Quaternion.Euler (new Vector3 (90f, 0, degree*30f)); //見える回転
 		if (this.degree >= 100f) {
-			rabbits = GameObject.FindGameObjectsWithTag("rabbit"); //タグで検索している、マンホールにコライダをつけない設計。
+			rabbits = GameObject.FindGameObjectsWithTag("rabbit"); //タグで検索している、マンホールにコライダをつけない設計->重そう
 			foreach (GameObject rabbit in rabbits) {
-				if (Mathf.Abs ((rabbit.transform.position - transform.position).magnitude) < 5f) {
+				if (Mathf.Abs ((rabbit.transform.position - transform.position).magnitude) < 3f) {
+					Destroy (rabbit.GetComponent<RabbitCon>().rabbitPos); //先にマップアイコンを消す。
 					Destroy (rabbit);
 					this.sceneDirSC.DropRabbit ();
 				}

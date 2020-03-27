@@ -6,15 +6,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	private Scene nowScene;
 
-	public int catchRabbit;
-	public int prepareRabbit; //用意するうさぎの数
+	public int maxCatchRabbit;
 	public AudioSource[] sources;
 
 	// 手書き風フォント「こども丸ゴシック細め」
-	void Start () { //コンストラクタ
+	void Start () {
 		DontDestroyOnLoad( gameObject );
-		catchRabbit = 0; //捕まえたうさぎの数
-		prepareRabbit = 1;
+		maxCatchRabbit = 0; //最高記録
 		sources = gameObject.GetComponents<AudioSource>(); //音楽
 	}
 	
@@ -28,9 +26,11 @@ public class GameManager : MonoBehaviour {
 		}
 		BGMPlay ();
 	}
+
 	public void LoadScene(string sceneName){ //シーン管理ここだけでやりたい
 		SceneManager.LoadScene(sceneName);
 	}
+
 	private void BGMPlay(){
 		if (nowScene.name == "Scene01") {
 			if (sources [1].isPlaying == false) {
