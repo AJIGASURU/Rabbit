@@ -6,13 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	private Scene nowScene;
 
-	public int maxCatchRabbit;
 	public AudioSource[] sources;
+    public int stageNum; //ステージ番号
 
 	// 手書き風フォント「こども丸ゴシック細め」
 	void Start () {
 		DontDestroyOnLoad( gameObject );
-		maxCatchRabbit = 0; //最高記録
 		sources = gameObject.GetComponents<AudioSource>(); //音楽
 	}
 	

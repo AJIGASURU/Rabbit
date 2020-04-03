@@ -9,25 +9,35 @@ public class Playercon : MonoBehaviour {
 	private bool moveleft;
 	private bool moveright;
 	private Animator playerAnimator;
+    private GameObject playerPos; //マップアイコン
+
+    public bool openingManhole;
 	// Use this for initialization
 	void Start () {
-		this.speed = 0.3f;
+		this.speed = 0.2f;
 		this.playerAnimator = GetComponent<Animator> ();
-	}
+        this.playerPos = GameObject.Find("UICanvas/Map/playerPos");
+        this.openingManhole = false;
+        this.moveback = false;
+        this.moveleft = false;
+        this.movefront = false;
+        this.moveright = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		TransForm ();
 		this.playerAnimator.SetInteger ("PlayerState", AnimationState());
+        PlayerIconControl();
 
 		//回転
 		if (Input.GetKey (KeyCode.L)) {
-			transform.Rotate (new Vector3 (0, 8f, 0));
+			transform.Rotate (new Vector3 (0, 3f, 0));
 		}
 		if (Input.GetKey (KeyCode.K)) {
-			transform.Rotate (new Vector3 (0, -8f, 0));
+			transform.Rotate (new Vector3 (0, -3f, 0));
 		}
-	}
+    }
 
 	void TransForm(){
 		Vector3 tmpDir = Vector3.zero;
@@ -76,7 +86,11 @@ public class Playercon : MonoBehaviour {
 	}
 
 	int AnimationState(){ //しかるべきアニメーションの状態を返す関数。
-		if (moveback) {
+        if (openingManhole)
+        {
+            return 9;
+        }
+        if (moveback) {
 			return 3;
 		} 
 		if (movefront) {
@@ -85,11 +99,19 @@ public class Playercon : MonoBehaviour {
 		if (moveright) {
 			return 7;
 		}
-		if (moveleft) {
-			return 5;
-		}
-		return 0; //静止
+        if (moveleft)
+        {
+            return 5;
+        }
+        return 0; //静止
 	}
+
+    void PlayerIconControl()
+    {
+        Vector3 playerPosAngle = this.playerPos.transform.localEulerAngles;
+        playerPosAngle.z = -transform.localEulerAngles.y;
+        this.playerPos.transform.localEulerAngles = playerPosAngle;
+    }
 
 
 }
